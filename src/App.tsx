@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+import Sidebar from "./components/Sidebar";
+import DepartmentList from "./components/DepartmentList";
+import DepartmentDetails from "./components/DepartmentDetails";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <div style={{ display: "flex" }}>
+          <Sidebar />
+          <div className="content" style={{ flex: 1 }}>
+            <Routes>
+              <Route path="/" element={<DepartmentList />} />
+              <Route
+                path="/:deptName"
+                element={
+                  <>
+                    <DepartmentDetails />
+                  </>
+                }
+              />
+            </Routes>
+          </div>
+        </div>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;
